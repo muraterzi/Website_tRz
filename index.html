@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>trz tech | Endpoint Excellence & Automation</title>
+    <meta name="description" content="Enterprise-grade Endpoint Management, security, and automation. Solution Architecture expertise from Microsoft.">
+    <link rel="icon" href="assets/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        trz: {
+                            orange:    '#FF7315',
+                            gray:      '#54565B',
+                            lightGray: '#A7A9AC',
+                            dark:      '#121212',
+                            card:      '#FBFBFB',
+                            body:      '#4B5563',
+                            blue:      '#0078D4'
+                        }
+                    },
+                    fontFamily: {
+                        sans:    ['Inter', 'sans-serif'],
+                        heading: ['Archivo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #FFFFFF; color: #121212; font-size: 15px; }
+        .font-heading { font-weight: 400 !important; letter-spacing: -0.025em; }
+
+        .glass-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 0 4px 20px -2px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: #FF7315;
+            box-shadow: 0 10px 30px -5px rgba(255,115,21,0.1);
+            transform: translateY(-2px);
+        }
+        .hero-glow { background: transparent; }
+        .logo-hero {
+            transition: filter 0.45s ease, transform 0.45s ease;
+            filter: drop-shadow(0 0 0px rgba(255,115,21,0));
+        }
+        .logo-hero:hover {
+            filter: drop-shadow(0 0 18px rgba(255,115,21,0.45)) drop-shadow(0 0 40px rgba(255,115,21,0.2));
+            transform: scale(1.04);
+        }
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,0,0,0.055) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.055) 1px, transparent 1px);
+            background-size: 44px 44px;
+            -webkit-mask-image: radial-gradient(ellipse 75% 85% at 50% 40%, black 0%, transparent 100%);
+            mask-image: radial-gradient(ellipse 75% 85% at 50% 40%, black 0%, transparent 100%);
+            pointer-events: none;
+        }
+        .ping-dot span:first-child {
+            animation: ping 1.5s cubic-bezier(0,0,0.2,1) infinite;
+        }
+        @keyframes ping {
+            75%,100% { transform: scale(2); opacity: 0; }
+        }
+
+        /* ── Responsive grid kolonları ── */
+        .grid-hero          { grid-template-columns: 35% 65%; }
+        .grid-services-hdr  { grid-template-columns: 35% 65%; }
+        @media (max-width: 768px) {
+            .grid-hero         { grid-template-columns: 1fr; }
+            .grid-services-hdr { grid-template-columns: 1fr; }
+        }
+
+        /* ── Animasyon ── */
+        .anim {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1),
+                        transform 0.75s cubic-bezier(0.16,1,0.3,1);
+        }
+        .anim.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- ── NAV ── -->
+    <nav class="fixed top-0 w-full z-50 border-b border-black/5 bg-white/80 backdrop-blur-md">
+        <div class="max-w-[1000px] mx-auto px-6 h-20 flex items-center justify-between">
+
+            <a href="/">
+                <img src="assets/logo-small.png" alt="trz tech" class="h-8">
+            </a>
+
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-trz-gray">
+                <a href="#services"     data-i18n="nav-services"   class="hover:text-trz-orange transition-colors">Services</a>
+                <a href="#upgrademate"  data-i18n="nav-products"   class="hover:text-trz-orange transition-colors">Products</a>
+                <a href="#experience"   data-i18n="nav-experience" class="hover:text-trz-orange transition-colors">Experience</a>
+                <a href="#contact"      data-i18n="nav-contact"    class="hover:text-trz-orange transition-colors">Contact</a>
+
+                <div class="flex items-center bg-gray-100 rounded-lg p-1 border border-gray-200">
+                    <button onclick="setLanguage('en')" id="btn-en"
+                        class="px-3 py-1 rounded-md text-xs font-bold transition-all bg-white shadow-sm text-trz-orange">EN</button>
+                    <button onclick="setLanguage('tr')" id="btn-tr"
+                        class="px-3 py-1 rounded-md text-xs font-bold transition-all text-gray-400 hover:text-trz-gray">TR</button>
+                </div>
+
+            </div>
+
+            <!-- Mobile menu button -->
+            <button id="mob-btn" class="md:hidden text-trz-dark" onclick="document.getElementById('mob-menu').classList.toggle('hidden')">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile dropdown -->
+        <div id="mob-menu" class="hidden md:hidden bg-white border-t border-gray-100 px-6 py-4 flex flex-col gap-4 text-sm font-medium text-trz-gray">
+            <a href="#services"    data-i18n="nav-services"   class="hover:text-trz-orange">Services</a>
+            <a href="#upgrademate" data-i18n="nav-products"   class="hover:text-trz-orange">Products</a>
+            <a href="#experience"  data-i18n="nav-experience" class="hover:text-trz-orange">Experience</a>
+            <a href="#contact"     data-i18n="nav-contact"    class="hover:text-trz-orange">Contact</a>
+            <div class="flex gap-2">
+                <button onclick="setLanguage('en')" class="px-3 py-1 rounded-md text-xs font-bold bg-gray-100 hover:bg-trz-orange hover:text-white transition-all">EN</button>
+                <button onclick="setLanguage('tr')" class="px-3 py-1 rounded-md text-xs font-bold bg-gray-100 hover:bg-trz-orange hover:text-white transition-all">TR</button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+
+        <!-- ── HERO ── -->
+        <section class="relative overflow-hidden" style="padding-top:88px;padding-bottom:80px">
+            <div class="hero-grid"></div>
+            <div class="max-w-[800px] mx-auto px-6 relative z-10">
+                <div class="grid grid-hero gap-0">
+
+                    <!-- Logo (sol) -->
+                    <div class="flex items-center justify-center lg:justify-start anim" data-delay="0">
+                        <img src="assets/logo.png" alt="trz tech" class="logo-hero w-full max-w-sm md:max-w-md object-contain p-6">
+                    </div>
+
+                    <!-- Metin (sağ) -->
+                    <div class="flex flex-col justify-center md:pl-10 py-8 md:py-16">
+                        <h1 class="text-5xl font-heading leading-tight mb-6 text-trz-dark anim" data-delay="120">
+                            <span data-i18n="hero-line1"><span class="text-trz-orange">Smart</span> Solutions for</span><br>
+                            <span data-i18n="hero-line3">Modern <span class="text-trz-orange">Infrastructure</span></span>
+                        </h1>
+                        <p class="text-sm text-trz-body leading-relaxed anim" data-delay="240" data-i18n="hero-desc">
+                            Your enterprise partner for Endpoint Management, Security, and Automation. Delivering precision with Microsoft-grade expertise.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ── SERVICES ── -->
+        <section id="services" class="py-16 md:py-20">
+
+            <!-- 1000px: tag + başlık + açıklama -->
+            <div class="max-w-[1000px] mx-auto px-6 mb-10">
+
+                <!-- Tag: tam genişlik -->
+                <h2 class="text-trz-orange font-bold tracking-widest mb-4 uppercase text-sm anim" data-delay="0" data-i18n="services-tag">AREAS OF EXPERTISE</h2>
+
+                <!-- Başlık sol, açıklama sağ -->
+                <div class="grid grid-services-hdr items-start gap-6 anim" data-delay="60">
+                    <div>
+                        <h3 class="text-4xl font-heading text-trz-dark leading-tight" data-i18n="services-title">Automating<br><span class="text-trz-orange">Your</span> IT Operations</h3>
+                    </div>
+                    <div>
+                        <p class="text-trz-body text-sm leading-relaxed" data-i18n="services-desc">
+                            We transform complex infrastructures into simple and secure systems with our deep Microsoft expertise.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 800px: 3 kart -->
+            <div class="max-w-[800px] mx-auto px-6">
+
+                <!-- Alt: 3 kart eşit sütun -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+                    <div class="glass-card p-7 rounded-[40px] group flex flex-col gap-4 anim" data-delay="60">
+                        <div class="w-10 h-10 rounded-2xl bg-trz-orange/5 border border-trz-orange/10 flex-shrink-0 flex items-center justify-center group-hover:bg-trz-orange group-hover:border-trz-orange transition-all text-trz-orange group-hover:text-white">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold mb-1" data-i18n="s1-title">Endpoint Management</h4>
+                            <p class="text-trz-body text-sm leading-relaxed" data-i18n="s1-desc">We ensure the security and management of your devices using Microsoft Intune and SCCM with Zero-Trust principles.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-7 rounded-[40px] group flex flex-col gap-4 anim" data-delay="160">
+                        <div class="w-10 h-10 rounded-2xl bg-trz-orange/5 border border-trz-orange/10 flex-shrink-0 flex items-center justify-center group-hover:bg-trz-orange group-hover:border-trz-orange transition-all text-trz-orange group-hover:text-white">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold mb-1" data-i18n="s2-title">IT Automation</h4>
+                            <p class="text-trz-body text-sm leading-relaxed" data-i18n="s2-desc">We turn repetitive IT tasks into high-efficiency workflows using PowerShell and Microsoft Graph API.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-7 rounded-[40px] group flex flex-col gap-4 anim" data-delay="260">
+                        <div class="w-10 h-10 rounded-2xl bg-trz-orange/5 border border-trz-orange/10 flex-shrink-0 flex items-center justify-center group-hover:bg-trz-orange group-hover:border-trz-orange transition-all text-trz-orange group-hover:text-white">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold mb-1" data-i18n="s3-title">Advanced Reporting</h4>
+                            <p class="text-trz-body text-sm leading-relaxed" data-i18n="s3-desc">We transform complex data into actionable insights and beautiful dashboards for decision-makers.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div><!-- /800px cards -->
+        </section>
+
+        <!-- ── UPGRADEMATE ── -->
+        <section id="upgrademate" class="py-32 bg-white">
+            <div class="max-w-[1000px] mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+                    <!-- Metin (sol) -->
+                    <div class="anim" data-delay="0">
+                        <h2 class="text-trz-orange font-bold tracking-widest mb-6 uppercase text-sm" data-i18n="products-tag">OUR PRODUCTS</h2>
+                        <h3 class="text-4xl font-heading text-trz-dark leading-tight mb-6" data-i18n="um-title">
+                            Make Windows<br>Upgrades<br><span class="text-trz-orange">Actually Work</span>
+                        </h3>
+                        <p class="text-trz-body text-sm leading-relaxed mb-8" data-i18n="um-desc">
+                            The smart add-on for ConfigMgr (SCCM) that turns enterprise Windows OS upgrades from a nightmare into a smooth ride.
+                        </p>
+                        <div class="flex items-center gap-4">
+                            <a href="https://www.upgrademate.io" target="_blank" rel="noopener"
+                                class="inline-block px-8 py-3.5 bg-trz-orange text-white rounded-xl font-medium text-sm hover:shadow-lg hover:shadow-orange-500/25 transition-all"
+                                data-i18n="um-cta">
+                                Get Started
+                            </a>
+                            <img src="assets/upgrademate-logo.png" alt="UpgradeMate" class="h-7 object-contain">
+                        </div>
+                    </div>
+
+                    <!-- Dashboard (sağ) -->
+                    <div class="relative anim" data-delay="160">
+                        <img src="assets/dashboard.jpg" alt="UpgradeMate Dashboard"
+                            class="w-full rounded-2xl border border-black/8 shadow-2xl shadow-black/10 object-cover">
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ── EXPERIENCE ── -->
+        <section id="experience" class="py-16 md:py-20">
+            <div class="max-w-[1000px] mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+
+                    <!-- stats grid -->
+                    <div class="grid grid-cols-2 gap-6 order-2 lg:order-1 anim" data-delay="100">
+                        <div class="p-10 glass-card rounded-[40px] text-center">
+                            <div class="text-5xl font-bold text-trz-orange mb-3 count-up" data-target="25">25+</div>
+                            <div class="text-xs text-trz-gray font-bold uppercase tracking-widest" data-i18n="stat-1">Years Experience</div>
+                        </div>
+                        <div class="p-10 glass-card rounded-[40px] text-center">
+                            <div class="text-5xl font-bold text-trz-orange mb-3 count-up" data-target="100">100+</div>
+                            <div class="text-xs text-trz-gray font-bold uppercase tracking-widest" data-i18n="stat-2">Global Projects</div>
+                        </div>
+                        <div class="col-span-2 p-6 glass-card rounded-[40px] flex flex-col gap-4">
+                            <div class="flex items-center gap-4">
+                                <svg class="h-7 w-7 text-trz-blue flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                </svg>
+                                <span class="text-sm font-bold text-trz-dark" data-i18n="stat-3">Microsoft Certified Solution Architect</span>
+                            </div>
+                            <div class="border-t border-black/6"></div>
+                            <div class="flex items-center gap-4">
+                                <svg class="h-7 w-7 text-trz-blue flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                </svg>
+                                <span class="text-sm font-bold text-trz-dark" data-i18n="stat-4">Microsoft Certified Trainer</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- text -->
+                    <div class="order-1 lg:order-2 anim" data-delay="0">
+                        <h2 class="text-trz-orange font-bold tracking-widest mb-4 uppercase text-sm" data-i18n="about-tag">FROM CORPORATE TO AGILE</h2>
+                        <h3 class="text-4xl font-bold font-heading mb-8 text-trz-dark leading-tight">
+                            <span data-i18n="about-title-1">Deep Expertise,</span><br>
+                            <span data-i18n="about-title-2"><span class="text-trz-orange">Results-Driven</span> Approach</span>
+                        </h3>
+                        <p class="text-trz-body text-sm leading-relaxed mb-8" data-i18n="about-p1">
+                            <strong>tRz tech</strong> brings 25+ years of enterprise Microsoft architecture experience, built through global infrastructure projects across the world's leading organizations. We combine corporate-grade depth with the agility of a focused specialist partner.
+                        </p>
+                        <p class="text-trz-body text-sm leading-relaxed" data-i18n="about-p2">
+                            Our focus isn't just installing technology; it's ensuring it runs securely and with the highest level of automation for your business.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ── CONTACT ── -->
+        <section id="contact" class="py-16 md:py-20">
+            <div class="max-w-[800px] mx-auto px-6">
+                <div class="bg-trz-dark rounded-[48px] p-12 md:p-16 text-white relative overflow-hidden anim" data-delay="0">
+
+                    <div class="text-center relative z-10">
+                        <h2 class="text-4xl md:text-5xl font-heading mb-3" data-i18n="contact-title">Get in Touch</h2>
+                        <p class="text-trz-lightGray text-sm mb-8" data-i18n="contact-desc">Please send mail and we will contact you!</p>
+                        <a href="mailto:info@trz-tech.com" class="inline-flex items-center gap-3 hover:opacity-80 transition-opacity">
+                            <div class="w-10 h-10 rounded-xl bg-trz-orange flex items-center justify-center flex-shrink-0">
+                                <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <span class="text-white font-medium text-sm">info@trz-tech.com</span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ── FOOTER ── -->
+    <footer class="py-8 border-t border-gray-100">
+        <div class="max-w-[1000px] mx-auto px-6 flex items-center justify-between gap-6">
+
+            <div class="flex items-center gap-4">
+                <img src="assets/logo-small.png" alt="trz tech" class="h-7">
+                <span class="text-trz-lightGray text-xs font-medium" data-i18n="footer-copy">tRz tech 2026. All rights reserved.</span>
+            </div>
+
+            <a href="https://www.linkedin.com/in/muraterzi" target="_blank" rel="noopener"
+                class="flex items-center gap-2 hover:opacity-70 transition-opacity">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6" fill="#0A66C2">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+            </a>
+
+        </div>
+    </footer>
+
+    <!-- ── i18n ── -->
+    <script>
+        const translations = {
+            en: {
+                "nav-services":   "Services",
+                "nav-products":   "Products",
+                "nav-experience": "Experience",
+                "nav-contact":    "Contact",
+                "nav-cta":        "Let's Talk Projects",
+                "hero-line1": "<span class='text-trz-orange'>Smart</span> Solutions for",
+                "hero-line3": "Modern <span class='text-trz-orange'>Infrastructure</span>",
+                "hero-desc":      "Your enterprise partner for Endpoint Management, Security, and Automation. Delivering precision with Microsoft-grade expertise.",
+                "hero-cta-primary":   "Get in Touch",
+                "hero-cta-secondary": "Discover UpgradeMate",
+                "products-tag":   "OUR PRODUCTS",
+                "services-tag":   "AREAS OF EXPERTISE",
+                "services-title": "Automating<br><span class='text-trz-orange'>Your</span> IT Operations",
+                "services-desc":  "We transform complex infrastructures into simple and secure systems with our deep Microsoft expertise.",
+                "s1-title": "Endpoint Management",
+                "s1-desc":  "We ensure the security and management of your devices using Microsoft Intune and SCCM with Zero-Trust principles.",
+                "s2-title": "IT Automation",
+                "s2-desc":  "We turn repetitive IT tasks into high-efficiency workflows using PowerShell and Microsoft Graph API.",
+                "s3-title": "Advanced Reporting",
+                "s3-desc":  "We transform complex data into actionable insights and beautiful dashboards for decision-makers.",
+                "product-label": "Flagship Product",
+                "product-title": "Leave Upgrades to<br><span class='text-trz-orange'>Your Assistant.</span>",
+                "product-desc":  "UpgradeMate handles OS upgrade processes by automatically analyzing device readiness, managing user communication, and providing 100% visibility.",
+                "feat-1": "Hardware and Software Compatibility Analysis",
+                "feat-2": "Automated User Notifications &amp; Scheduling",
+                "feat-3": "Real-time Progress Tracking Dashboards",
+                "product-cta": "Request a Demo",
+                "mock-r1": "Windows 11 Upgrade — 847 devices",
+                "mock-t1": "Active",
+                "mock-r2": "Compatibility Analysis — Complete",
+                "mock-t2": "Done",
+                "mock-r3": "User Notifications — Scheduled",
+                "mock-t3": "Pending",
+                "about-tag":   "FROM CORPORATE TO AGILE",
+                "about-title-1": "Deep Expertise,",
+                "about-title-2": "<span class='text-trz-orange'>Results-Driven</span> Approach",
+                "about-p1":    "Having served as a Solution Architect at Microsoft for years, I've designed global infrastructures. Since October 2024, I've brought this expertise to <strong>trz tech</strong> to provide agile and focused solutions.",
+                "about-p2":    "Our focus isn't just installing technology; it's ensuring it runs securely and with the highest level of automation for your business.",
+                "stat-1": "Experience",
+                "stat-2": "Projects",
+                "stat-3": "Microsoft Certified Solution Architect",
+                "stat-4": "Microsoft Certified Trainer",
+                "about-p1": "<strong>tRz tech</strong> brings 25+ years of enterprise Microsoft architecture experience, built through global infrastructure projects across the world's leading organizations. We combine corporate-grade depth with the agility of a focused specialist partner.",
+                "contact-title": "Get in Touch",
+                "contact-desc":  "Please send mail and we will contact you!",
+                "um-title":      "Make Windows<br>Upgrades<br><span class='text-trz-orange'>Actually Work</span>",
+                "um-desc":       "The smart add-on for ConfigMgr (SCCM) that turns enterprise Windows OS upgrades from a nightmare into a smooth ride.",
+                "um-cta":        "Get Started",
+                "footer-copy":   "tRz tech 2026. All rights reserved."
+            },
+            tr: {
+                "nav-services":   "Hizmetler",
+                "nav-products":   "Ürünler",
+                "nav-experience": "Deneyim",
+                "nav-contact":    "İletişim",
+                "nav-cta":        "Projeleri Konuşalım",
+                "hero-line1": "Modern <span class='text-trz-orange'>BT</span> Yapıları için",
+                "hero-line3": "<span class='text-trz-orange'>Yaratıcı</span> Çözümler",
+                "hero-desc":      "Endpoint Yönetimi, Güvenlik ve Otomasyon alanında kurumsal çözüm ortağınız. Microsoft düzeyinde uzmanlıkla hassas çözümler sunuyoruz.",
+                "hero-cta-primary":   "İletişime Geç",
+                "hero-cta-secondary": "UpgradeMate'i Keşfedin",
+                "products-tag":   "ÜRÜNLERİMİZ",
+                "services-tag":   "UZMANLIK ALANLARI",
+                "services-title": "IT Operasyonlarınızı<br><span class='text-trz-orange'>Otomatize</span> Ediyoruz",
+                "services-desc":  "Microsoft ekosistemindeki derin tecrübemizle karmaşık altyapıları sade ve güvenli sistemlere dönüştürüyoruz.",
+                "s1-title": "Endpoint Yönetimi",
+                "s1-desc":  "Microsoft Intune ve SCCM ile cihazlarınızın tam güvenliğini ve yönetimini Zero-Trust prensipleriyle sağlıyoruz.",
+                "s2-title": "IT Otomasyonu",
+                "s2-desc":  "Tekrar eden IT süreçlerinizi PowerShell ve Graph API kullanarak yüksek verimli iş akışlarına dönüştürüyoruz.",
+                "s3-title": "Gelişmiş Raporlama",
+                "s3-desc":  "Karmaşık verileri karar vericiler için anlamlı ve aksiyon alınabilir dashboard'lara dönüştürüyoruz.",
+                "product-label": "Amiral Gemisi Ürün",
+                "product-title": "Yükseltme Süreçlerini<br><span class='text-trz-orange'>Asistanınıza Bırakın.</span>",
+                "product-desc":  "UpgradeMate, cihaz durumlarını otomatik analiz ederek OS yükseltme süreçlerini, kullanıcı iletişimini ve görünürlüğü %100 yönetir.",
+                "feat-1": "Donanım ve Yazılım Uyumluluk Analizi",
+                "feat-2": "Otomatik Kullanıcı Bildirimleri ve Planlama",
+                "feat-3": "Gerçek Zamanlı İlerleme Takip Panelleri",
+                "product-cta": "Demo Talep Edin",
+                "mock-r1": "Windows 11 Yükseltme — 847 cihaz",
+                "mock-t1": "Aktif",
+                "mock-r2": "Uyumluluk Analizi — Tamamlandı",
+                "mock-t2": "Bitti",
+                "mock-r3": "Kullanıcı Bildirimleri — Planlandı",
+                "mock-t3": "Bekliyor",
+                "about-tag":   "KURUMSALLIKTAN ÇEVİKLİĞE",
+                "about-title-1": "Derin Tecrübe,",
+                "about-title-2": "<span class='text-trz-orange'>Sonuç Odaklı</span> Yaklaşım",
+                "about-p1":    "Yıllarca Microsoft bünyesinde Solution Architect olarak global projeler kurguladım. Ekim 2024 itibarıyla bu tecrübeyi <strong>trz tech</strong> çatısı altında çevik çözümlere dönüştürdüm.",
+                "about-p2":    "Odak noktamız sadece teknoloji kurmak değil; o teknolojinin en güvenli ve en yüksek otomasyon seviyesinde çalışmasını sağlamaktır.",
+                "stat-1": "Tecrübe",
+                "stat-2": "Proje",
+                "stat-3": "Microsoft Sertifikalı Çözüm Mimarı",
+                "stat-4": "Microsoft Sertifikalı Eğitmen",
+                "about-p1": "<strong>tRz tech</strong>, dünyanın önde gelen kuruluşlarındaki global altyapı projelerinden süzülen 25+ yıllık kurumsal Microsoft mimarisi deneyimini taşır. Kurumsal derinliği, odaklı bir uzman iş ortağının çevikliğiyle birleştiriyoruz.",
+                "contact-title": "İletişime Geçin",
+                "contact-desc":  "Mail gönderin, en kısa sürede size ulaşalım!",
+                "um-title":      "Windows Yükseltmelerini<br>Gerçekten<br><span class='text-trz-orange'>İşler Hale Getirin</span>",
+                "um-desc":       "ConfigMgr (SCCM) için akıllı eklenti — kurumsal Windows OS yükseltmelerini kabustan sorunsuz bir deneyime dönüştürür.",
+                "um-cta":        "Başlayın",
+                "footer-copy":   "tRz tech 2026. Tüm hakları saklıdır."
+            }
+        };
+
+        function setLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const v = translations[lang][el.getAttribute('data-i18n')];
+                if (v !== undefined) el.innerHTML = v;
+            });
+            const isEn = lang === 'en';
+            document.getElementById('btn-en').className = isEn
+                ? "px-3 py-1 rounded-md text-xs font-bold transition-all bg-white shadow-sm text-trz-orange"
+                : "px-3 py-1 rounded-md text-xs font-bold transition-all text-gray-400 hover:text-trz-gray";
+            document.getElementById('btn-tr').className = isEn
+                ? "px-3 py-1 rounded-md text-xs font-bold transition-all text-gray-400 hover:text-trz-gray"
+                : "px-3 py-1 rounded-md text-xs font-bold transition-all bg-white shadow-sm text-trz-orange";
+        }
+
+        window.onload = () => setLanguage('en');
+
+        // Sayma animasyonu
+        function animateCount(el) {
+            const target = parseInt(el.dataset.target);
+            const duration = 1600;
+            const step = 16;
+            const increment = target / (duration / step);
+            let current = 0;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    el.textContent = target + '+';
+                    clearInterval(timer);
+                } else {
+                    el.textContent = Math.floor(current) + '+';
+                }
+            }, step);
+        }
+
+        const countObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCount(entry.target);
+                    countObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.count-up').forEach(el => countObserver.observe(el));
+
+        // Scroll & load animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const delay = parseInt(entry.target.dataset.delay || 0);
+                    setTimeout(() => entry.target.classList.add('in'), delay);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.anim').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
