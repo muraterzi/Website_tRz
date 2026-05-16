@@ -128,11 +128,11 @@
         </div>
 
         <!-- Mobile dropdown -->
-        <div id="mob-menu" class="hidden md:hidden bg-white border-t border-gray-100 px-6 py-4 flex flex-col gap-4 text-sm font-medium text-trz-gray">
-            <a href="#services"    data-i18n="nav-services"   class="hover:text-trz-orange">Services</a>
-            <a href="#upgrademate" data-i18n="nav-products"   class="hover:text-trz-orange">Products</a>
-            <a href="#experience"  data-i18n="nav-experience" class="hover:text-trz-orange">Experience</a>
-            <a href="#contact"     data-i18n="nav-contact"    class="hover:text-trz-orange">Contact</a>
+        <div id="mob-menu" class="hidden md:hidden bg-white border-t border-gray-100 px-6 py-4 flex flex-col gap-4 text-sm font-medium text-trz-gray items-end">
+            <a href="#services"    data-i18n="nav-services"   class="hover:text-trz-orange" onclick="closeMobMenu()">Services</a>
+            <a href="#upgrademate" data-i18n="nav-products"   class="hover:text-trz-orange" onclick="closeMobMenu()">Products</a>
+            <a href="#experience"  data-i18n="nav-experience" class="hover:text-trz-orange" onclick="closeMobMenu()">Experience</a>
+            <a href="#contact"     data-i18n="nav-contact"    class="hover:text-trz-orange" onclick="closeMobMenu()">Contact</a>
             <div class="flex gap-2">
                 <button onclick="setLanguage('en')" class="px-3 py-1 rounded-md text-xs font-bold bg-gray-100 hover:bg-trz-orange hover:text-white transition-all">EN</button>
                 <button onclick="setLanguage('tr')" class="px-3 py-1 rounded-md text-xs font-bold bg-gray-100 hover:bg-trz-orange hover:text-white transition-all">TR</button>
@@ -472,6 +472,10 @@
                 "footer-copy":   "tRz tech 2026. Tüm hakları saklıdır."
             }
         };
+
+        function closeMobMenu() {
+            document.getElementById('mob-menu').classList.add('hidden');
+        }
 
         function setLanguage(lang) {
             document.documentElement.lang = lang;
